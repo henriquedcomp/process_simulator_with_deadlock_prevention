@@ -1,12 +1,10 @@
-
 public class BankersAlgorithm {
-    private int[] available; //Quantidade disponível de cada recurso
-    private int[][] allocation; //Matriz de recursos alocados para um processo
-    private int[][] max; //Demanda máxima de recursos para cada processo
-    private int[][] need; // indica os recursos restantes para que o processo finalize a execução (Need = max - allocation)
-    private int numOfProcesses;
-    private int numOfResources;
-
+    private final int[] available; //Quantidade disponível de cada recurso
+    private final int[][] allocation; //Matriz de recursos alocados para um processo
+    private final int[][] max; //Demanda máxima de recursos para cada processo
+    private final int[][] need; // indica os recursos restantes para que o processo finalize a execução (Need = max - allocation)
+    private final int numOfProcesses;
+    private final int numOfResources;
 
     public BankersAlgorithm(int[][] allocation, int[][] max, int[] available) {
         this.allocation = allocation;
@@ -33,7 +31,7 @@ public class BankersAlgorithm {
 
         //array para guardar o estado de execução dos processos
         boolean[] finish = new boolean[numOfProcesses];
-        int[] safeSequence = new int[numOfProcesses];
+        //int[] safeSequence = new int[numOfProcesses];
         //quantidade de processos concluídos na sequência segura
         int count = 0;
 
@@ -53,7 +51,8 @@ public class BankersAlgorithm {
                         for (int k = 0; k < numOfResources; k++) {
                             work[k] += allocation[p][k];
                         }
-                        safeSequence[count++] = p;
+                        //safeSequence[count++] = p;
+                        count++;
                         finish[p] = true;
                         found = true;
                     }
@@ -61,46 +60,16 @@ public class BankersAlgorithm {
             }
 
             if (!found) {
-                System.out.println("O sistema não está em um estado seguro.");
+                //System.out.println("O sistema não está em um estado seguro.");
                 return false;
             }
         }
 
-        System.out.print("O sistema está em um estado seguro. Sequência segura: ");
+        /*System.out.print("O sistema está em um estado seguro. Sequência segura: ");
         for (int i = 0; i < numOfProcesses; i++) {
             System.out.print("P" + safeSequence[i] + (i == numOfProcesses - 1 ? "" : " -> "));
         }
-        System.out.println();
+        System.out.println();*/
         return true;
     }
-
-    public static void main(String[] args) {
-        int[][] allocation = {
-            {0, 1, 0},
-            {2, 0, 0},
-            {3, 0, 2},
-            {2, 1, 1},
-            {0, 0, 2}
-        };
-        
-        int[][] max = {
-            {7, 5, 3},
-            {3, 2, 2},
-            {9, 0, 2},
-            {2, 2, 2},
-            {4, 3, 3}
-        };
-        
-        // Exemplo de estado seguro
-        // int[] available = {3, 3, 2};
-
-        // Exemplo de estado inseguro
-        int[] available = {1,1,0};
-
-        BankersAlgorithm banker = new BankersAlgorithm(allocation, max, available);
-        
-        banker.isSafeState();
-    }
-
-    
 }
