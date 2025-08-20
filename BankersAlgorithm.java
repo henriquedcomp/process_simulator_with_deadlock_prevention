@@ -31,7 +31,7 @@ public class BankersAlgorithm {
 
         //array para guardar o estado de execução dos processos
         boolean[] finish = new boolean[numOfProcesses];
-        //int[] safeSequence = new int[numOfProcesses];
+
         //quantidade de processos concluídos na sequência segura
         int count = 0;
 
@@ -51,7 +51,7 @@ public class BankersAlgorithm {
                         for (int k = 0; k < numOfResources; k++) {
                             work[k] += allocation[p][k];
                         }
-                        //safeSequence[count++] = p;
+
                         count++;
                         finish[p] = true;
                         found = true;
@@ -60,16 +60,10 @@ public class BankersAlgorithm {
             }
 
             if (!found) {
-                //System.out.println("O sistema não está em um estado seguro.");
                 return false;
             }
         }
 
-        /*System.out.print("O sistema está em um estado seguro. Sequência segura: ");
-        for (int i = 0; i < numOfProcesses; i++) {
-            System.out.print("P" + safeSequence[i] + (i == numOfProcesses - 1 ? "" : " -> "));
-        }
-        System.out.println();*/
         return true;
     }
 }

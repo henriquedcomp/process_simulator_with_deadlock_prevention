@@ -1,7 +1,3 @@
-
-
-
-
 public class BankersMonitor {
     // Faz o papel do SO de decidir se entrega ou não um recurso a um processo
     // baseia-no no conceito de estado seguro e algoritmo do banqueiro
@@ -18,35 +14,31 @@ public class BankersMonitor {
     
     private final static int[] available = {1, 1};
     
-    public static boolean getResource(IProcess process, Resource resource) {
-        System.out.println("Processo " + process.getPid() + " está tentando pegar o " + resource.getNome());
+    public static boolean getResource(Process process, Resource resource) {
+        System.out.println(process.toString() + " está tentando pegar " + resource.getName());
 
-        allocation[process.getPid()][resource.getIndex()] += 1;
+        allocation[process.getIndex()][resource.getIndex()] += 1;
         available[resource.getIndex()] -= 1;
 
         BankersAlgorithm banker = new BankersAlgorithm(allocation, max, available);
-
-        //System.out.println("DEBUG:" + Arrays.deepToString(allocation));
-        //System.out.println("DEBUG:" + Arrays.deepToString(max));
-        //System.out.println("DEBUG:" + Arrays.toString(available));
 
         if(banker.isSafeState()) {
             resource.get();
             return true;
         }
 
-        System.out.print("Processo " + process.getPid() + " não conseguiu pegar o " + resource.getNome());
+        System.out.print(process.toString() + " não conseguiu pegar " + resource.getName());
         System.out.println("(Estado inseguro)");
 
-        allocation[process.getPid()][resource.getIndex()] -= 1;
+        allocation[process.getIndex()][resource.getIndex()] -= 1;
         available[resource.getIndex()] += 1;
 
         return false;
     }
 
-    public static void releaseResource(IProcess process, Resource resource) {
-        allocation[process.getPid()][resource.getIndex()] -= 1;
-        max[process.getPid()][resource.getIndex()] -= 1;
+    public static void releaseResource(Process process, Resource resource) {
+        allocation[process.getIndex()][resource.getIndex()] -= 1;
+        max[process.getIndex()][resource.getIndex()] -= 1;
         available[resource.getIndex()] += 1;
         resource.release();
     }
