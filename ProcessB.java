@@ -10,18 +10,14 @@ public class ProcessB extends Process {
         } catch (InterruptedException e) {}
 
         // Execução com Deadlock
-        //resource1.get();
+        this.getResource(resource2, Algorithms.OSTRICH);
+        this.getResource(resource1, Algorithms.OSTRICH);
 
         // Execução sem Deadlock
-        this.getResource(resource2);
-
-        // Execução com Deadlock
-        //resource2.get();  //
-
-        // Execução sem Deadlock
-        this.getResource(resource1);
+        /*this.getResource(resource2, Algorithms.BANKER);
+        this.getResource(resource1, Algorithms.BANKER);
         this.useResources();
-        this.releaseResources();
+        this.releaseResources();*/
 
         System.out.println(this.toString() + " finalizou");
     }

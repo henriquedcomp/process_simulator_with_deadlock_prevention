@@ -31,10 +31,15 @@ public abstract class Process implements Runnable {
         System.out.println(this.toString() + " utilizou os recursos para escrever");
     }
 
-    public void getResource(Resource resource) {
+    public void getResource(Resource resource, Algorithms algorithm) {
+        if(algorithm == Algorithms.OSTRICH) {
+            resource.get();
+            return;
+        }
+
         synchronized(resource) {
             try {
-                while(!BankersMonitor.getResource(this, resource)) {
+                while(!RequestAnalyzer.getResource(this, resource)) {
                     resource.wait();  // Bloqueia a thread até que consiga obter o recurso
                 }
             } catch (InterruptedException e) {}
@@ -43,12 +48,12 @@ public abstract class Process implements Runnable {
 
     public void releaseResources() {
         synchronized(this.resource1) {
-            BankersMonitor.releaseResource(this, this.resource1);
+            RequestAnalyzer.releaseResource(this, this.resource1);
             this.resource1.notifyAll();
         }
 
         synchronized(this.resource2) {
-            BankersMonitor.releaseResource(this, this.resource2);
+            RequestAnalyzer.releaseResource(this, this.resource2);
             this.resource2.notifyAll();
         }
     }

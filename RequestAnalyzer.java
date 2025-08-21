@@ -1,13 +1,13 @@
-public class BankersMonitor {
+public class RequestAnalyzer {
     // Faz o papel do SO de decidir se entrega ou não um recurso a um processo
-    // baseia-no no conceito de estado seguro e algoritmo do banqueiro
+    // baseia-se no conceito de estado seguro e algoritmo do banqueiro
 
     private final static int[][] allocation = {
         {0, 0},
         {0, 0}
     };
     
-    private final static int[][] max = {
+    private static int[][] max = {
         {1, 1},
         {1, 1}
     };
@@ -41,5 +41,14 @@ public class BankersMonitor {
         max[process.getIndex()][resource.getIndex()] -= 1;
         available[resource.getIndex()] += 1;
         resource.release();
+    }
+
+    public static void resetAnalyzer() {
+        int[][] newMax = {
+            {1, 1},
+            {1, 1}
+        };
+
+        max = newMax;
     }
 }

@@ -6,22 +6,22 @@ public class ProcessA extends Process {
     @Override
     public void run() {
         // Execução com Deadlock
-        //resource1.get();
+        this.getResource(resource1, Algorithms.OSTRICH);
 
         // Execução sem Deadlock
-        this.getResource(resource1);
+        //this.getResource(resource1, Algorithms.BANKER);
 
         try {
             Thread.sleep(2000); // "Garante" que o SO escalone a outra thread para forçar o Deadlock
         } catch (InterruptedException e) {}
 
         // Execução com Deadlock
-        //resource2.get();
+        this.getResource(resource2, Algorithms.OSTRICH);
 
         // Execução sem Deadlock
-        this.getResource(resource2);
+        /*this.getResource(resource2, Algorithms.BANKER);
         this.useResources();
-        this.releaseResources();
+        this.releaseResources();*/
 
         System.out.println(this.toString() + " finalizou");
     }
