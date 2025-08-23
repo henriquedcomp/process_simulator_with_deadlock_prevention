@@ -1,3 +1,4 @@
+// Processo criado para rodar os testes de performance
 public class ProcessC extends Process {
     private final int iterations = 10000;
     private final int warmupIterations = 1000;
@@ -14,6 +15,7 @@ public class ProcessC extends Process {
         long end;
 
         // Aquecimento
+        // Evita viés da JVM por questões de cache
         for(int i = 0; i < this.warmupIterations; i++) {
             this.getResource(this.resource1, Algorithms.OSTRICH);
             this.getResource(this.resource2, Algorithms.OSTRICH);
@@ -28,6 +30,7 @@ public class ProcessC extends Process {
             RequestAnalyzer.resetAnalyzer();
         }
 
+        // mede o tempo de execução utlizando o algoritmo do avestruz
         start = System.nanoTime();
 
         for(int i = 0; i < this.iterations; i++) {
@@ -42,6 +45,7 @@ public class ProcessC extends Process {
 
         totalTimeOstrich = end - start;
 
+        // mede o tempo de execução utlizando o algoritmo do banqueiro
         start = System.nanoTime();
 
         for(int i = 0; i < this.iterations; i++) {

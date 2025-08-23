@@ -11,11 +11,13 @@ public class Resource {
         this.allocationMatrixIndex = allocationMatrixIndex;
     }
 
+    // obtem o lock
     public void get() {
         lock.lock();
         System.out.println(Thread.currentThread().getName() + " adquiriu " + this.name);
     }
 
+    // libera o lock
     public void release() {
         lock.unlock();
         System.out.println(Thread.currentThread().getName() + " liberou " + this.name);

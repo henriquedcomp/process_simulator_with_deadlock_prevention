@@ -31,6 +31,7 @@ public abstract class Process implements Runnable {
         System.out.println(this.toString() + " utilizou os recursos para escrever");
     }
 
+    //tenta pegar um recurso a partir de um algoritmo de análise de requisição
     public void getResource(Resource resource, Algorithms algorithm) {
         if(algorithm == Algorithms.OSTRICH) {
             resource.get();
@@ -46,6 +47,7 @@ public abstract class Process implements Runnable {
         }
     }
 
+    //libera os recursos que estavam sob posse do processo, acordando as threads bloqueadas
     public void releaseResources() {
         synchronized(this.resource1) {
             RequestAnalyzer.releaseResource(this, this.resource1);
